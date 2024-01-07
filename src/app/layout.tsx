@@ -1,4 +1,6 @@
 import "~/styles/globals.css";
+import { NavPanel } from "~/components/navpanel";
+import { ClerkProvider } from "@clerk/nextjs";
 
 import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
@@ -16,17 +18,27 @@ export const metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const layout = cookies().get("react-resizable-panels:layout");
+  const collapsed = cookies().get("react-resizable-panels:collapsed");
+
+  type LayoutParse = number[] | undefined;
+
+  const defaultLayout = layout ? (JSON.parse(layout.value) as LayoutParse) : undefined;
+  const defaultCollapsed: boolean = collapsed ? (JSON.parse(collapsed.value) as boolean) : false;
+
   return (
     <html lang="en">
       <body className={`font-sans ${inter.variable}`}>
-        <TRPCReactProvider cookies={cookies().toString()}>
-          {children}
-        </TRPCReactProvider>
+        <ClerkProvider>
+          <TRPCReactProvider cookies={cookies().toString()}>
+            <div className="flex h-screen bg-slate-100">
+              <NavPanel defaultLayout={defaultLayout} defaultCollapsed={defaultCollapsed}>
+                {children}
+              </NavPanel>
+            </div>
+          </TRPCReactProvider>
+        </ClerkProvider>
       </body>
     </html>
   );
