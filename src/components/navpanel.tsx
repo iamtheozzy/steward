@@ -15,7 +15,7 @@ interface NavProps {
   children: React.ReactNode;
 }
 
-export const NavPanel = ({ children, defaultLayout = [20, 80], defaultCollapsed, navCollapsedSize }: NavProps) => {
+export const NavPanel = ({ children, defaultLayout = [17, 80], defaultCollapsed, navCollapsedSize }: NavProps) => {
   const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed);
 
   return (
@@ -25,19 +25,21 @@ export const NavPanel = ({ children, defaultLayout = [20, 80], defaultCollapsed,
         onLayout={(sizes: number[]) => {
           document.cookie = `react-resizable-panels:layout=${JSON.stringify(sizes)}`;
         }}
-        className="h-full max-h-[800px] items-stretch"
+        className="h-full items-stretch"
       >
         <ResizablePanel
           defaultSize={defaultLayout[0]}
           collapsible={true}
           minSize={5}
-          maxSize={30}
+          maxSize={20}
           collapsedSize={navCollapsedSize}
           onCollapse={() => {
-            setIsCollapsed(() => !isCollapsed);
-            console.log('isCollapsed', isCollapsed)
-            console.log('on collapse fired')
-            document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(!isCollapsed)}`;
+            setIsCollapsed(true);
+            document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(true)}`;
+          }}
+          onExpand={() => {
+            setIsCollapsed(false);
+            document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(false)}`;
           }}
           className={cn(isCollapsed && "min-w-[50px] transition-all duration-300 ease-in-out")}
         >

@@ -18,8 +18,6 @@ interface NavProps {
 
 export function Nav({ isCollapsed, links }: NavProps) {
 
-  console.log('isCollapsed', isCollapsed);
-
   return (
     <div className="flex h-screen flex-col bg-gray-800 text-white">
       <div
