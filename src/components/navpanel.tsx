@@ -2,7 +2,14 @@
 
 import * as React from "react";
 import { UserButton } from "@clerk/nextjs";
-import { LayoutDashboard } from "lucide-react";
+import {
+  LayoutDashboard,
+  CalendarDays,
+  CalendarClock,
+  PiggyBank,
+  DollarSign,
+  MessageSquare,
+} from "lucide-react";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "~/components/ui/resizable";
 import { TooltipProvider } from "./ui/tooltip";
 import { cn } from "~/lib/utils";
@@ -15,7 +22,12 @@ interface NavProps {
   children: React.ReactNode;
 }
 
-export const NavPanel = ({ children, defaultLayout = [17, 80], defaultCollapsed, navCollapsedSize }: NavProps) => {
+export const NavPanel = ({
+  children,
+  defaultLayout = [17, 80],
+  defaultCollapsed,
+  navCollapsedSize,
+}: NavProps) => {
   const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed);
 
   return (
@@ -30,7 +42,7 @@ export const NavPanel = ({ children, defaultLayout = [17, 80], defaultCollapsed,
         <ResizablePanel
           defaultSize={defaultLayout[0]}
           collapsible={true}
-          minSize={5}
+          minSize={10}
           maxSize={20}
           collapsedSize={navCollapsedSize}
           onCollapse={() => {
@@ -49,6 +61,31 @@ export const NavPanel = ({ children, defaultLayout = [17, 80], defaultCollapsed,
               {
                 title: "Dashboard",
                 icon: LayoutDashboard,
+                variant: "ghost",
+              },
+              {
+                title: "Weekly Plan",
+                icon: CalendarDays,
+                variant: "ghost",
+              },
+              {
+                title: "Annual Budget",
+                icon: CalendarClock,
+                variant: "ghost",
+              },
+              {
+                title: "Budgeted Savings",
+                icon: PiggyBank,
+                variant: "ghost",
+              },
+              {
+                title: "Transactions",
+                icon: DollarSign,
+                variant: "ghost",
+              },
+              {
+                title: "Message",
+                icon: MessageSquare,
                 variant: "ghost",
               },
             ]}

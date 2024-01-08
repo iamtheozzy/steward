@@ -17,7 +17,6 @@ interface NavProps {
 }
 
 export function Nav({ isCollapsed, links }: NavProps) {
-
   return (
     <div className="flex h-screen flex-col bg-gray-800 text-white">
       <div
@@ -25,6 +24,19 @@ export function Nav({ isCollapsed, links }: NavProps) {
         className="group flex flex-col gap-4 py-2 data-[collapsed=true]:py-2"
       >
         <nav className="grid gap-1 px-2 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2">
+          {isCollapsed ? (
+            <Tooltip delayDuration={0}>
+              <TooltipTrigger asChild>
+                <h1 className="px-3 text-3xl font-bold hover:cursor-pointer">s.</h1>
+              </TooltipTrigger>
+              <TooltipContent side="right" className="flex items-center gap-1">
+                <h1 className="px-3 text-sm font-bold hover:cursor-pointer">little stewie.</h1>
+              </TooltipContent>
+            </Tooltip>
+          ) : (
+            <h1 className="px-3 text-2xl font-bold">steward.</h1>
+          )}
+
           {links.map((link, index) =>
             isCollapsed ? (
               <Tooltip key={index} delayDuration={0}>
