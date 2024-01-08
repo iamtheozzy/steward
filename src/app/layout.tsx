@@ -33,7 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ClerkProvider>
           <TRPCReactProvider cookies={cookies().toString()}>
             <div className="flex h-screen bg-slate-100">
-              <NavPanel defaultLayout={defaultLayout} defaultCollapsed={defaultCollapsed}>
+              <NavPanel defaultLayout={defaultLayout} defaultCollapsed={defaultCollapsed} navCollapsedSize={5}>
                 {children}
               </NavPanel>
             </div>
