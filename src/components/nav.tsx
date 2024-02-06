@@ -5,7 +5,9 @@ import Link from "next/link";
 import { cn } from "~/lib/utils";
 import type { LucideIcon } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/tooltip";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { buttonVariants } from "~/components/ui/button";
+import { useUser } from "@clerk/nextjs";
 
 interface NavProps {
   isCollapsed: boolean;
@@ -13,10 +15,23 @@ interface NavProps {
     title: string;
     icon: LucideIcon;
     variant: "default" | "ghost";
+    route: string;
+  }[];
+  supportLinks: {
+    title: string;
+    icon: LucideIcon;
+    variant: "default" | "ghost";
+    route: string;
   }[];
 }
 
-export function Nav({ isCollapsed, links }: NavProps) {
+export function Nav({ isCollapsed, links, supportLinks }: NavProps) {
+  const { isLoaded, isSignedIn, user } = useUser();
+
+  if (!isLoaded || !isSignedIn) {
+    return null;
+  }
+
   return (
     <div className="flex h-screen flex-col bg-gray-800 text-white">
       <div
@@ -30,7 +45,7 @@ export function Nav({ isCollapsed, links }: NavProps) {
                 <h1 className="px-3 text-3xl font-bold hover:cursor-pointer">s.</h1>
               </TooltipTrigger>
               <TooltipContent side="right" className="flex items-center gap-1">
-                <h1 className="px-3 text-sm font-bold hover:cursor-pointer">little stewie.</h1>
+                <h1 className="px-3 text-sm font-bold hover:cursor-pointer">stewie.</h1>
               </TooltipContent>
             </Tooltip>
           ) : (
@@ -42,7 +57,7 @@ export function Nav({ isCollapsed, links }: NavProps) {
               <Tooltip key={index} delayDuration={0}>
                 <TooltipTrigger asChild>
                   <Link
-                    href="#"
+                    href={link.route}
                     className={cn(
                       buttonVariants({ variant: link.variant, size: "icon" }),
                       "h-9 w-9",
@@ -61,7 +76,7 @@ export function Nav({ isCollapsed, links }: NavProps) {
             ) : (
               <Link
                 key={index}
-                href="#"
+                href={link.route}
                 className={cn(
                   buttonVariants({ variant: link.variant, size: "sm" }),
                   link.variant === "default" &&
@@ -74,6 +89,56 @@ export function Nav({ isCollapsed, links }: NavProps) {
               </Link>
             ),
           )}
+
+          <div className="flex flex-col">
+            {supportLinks.map((link, index) =>
+              isCollapsed ? (
+                <Tooltip key={index} delayDuration={0}>
+                  <TooltipTrigger asChild>
+                    <Link
+                      href={link.route}
+                      className={cn(
+                        buttonVariants({ variant: link.variant, size: "icon" }),
+                        "h-9 w-9",
+                        link.variant === "default" &&
+                          "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white",
+                      )}
+                    >
+                      <link.icon className="h-4 w-4" />
+                      <span className="sr-only">{link.title}</span>
+                    </Link>
+                  </TooltipTrigger>
+                  <TooltipContent side="right" className="flex items-center gap-4">
+                    {link.title}
+                  </TooltipContent>
+                </Tooltip>
+              ) : (
+                <Link
+                  key={index}
+                  href={link.route}
+                  className={cn(
+                    buttonVariants({ variant: link.variant, size: "sm" }),
+                    link.variant === "default" &&
+                      "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white",
+                    "justify-start",
+                  )}
+                >
+                  <link.icon className="mr-2 h-4 w-4" />
+                  {link.title}
+                </Link>
+              ),
+            )}
+            <div className="flex items-center gap-2">
+              <Avatar>
+                <AvatarImage src={user.imageUrl} alt={user.fullName ?? undefined} />
+                <AvatarFallback>{user.fullName}</AvatarFallback>
+              </Avatar>
+              <div>
+                <p className="text-xs">{user.fullName}</p>
+                <p className="text-xs">{user.primaryEmailAddress?.emailAddress}</p>
+              </div>
+            </div>
+          </div>
         </nav>
       </div>
     </div>

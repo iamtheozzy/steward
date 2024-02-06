@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { UserButton } from "@clerk/nextjs";
 import {
   LayoutDashboard,
   CalendarDays,
@@ -9,6 +8,8 @@ import {
   PiggyBank,
   DollarSign,
   MessageSquare,
+  LifeBuoy,
+  Settings,
 } from "lucide-react";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "~/components/ui/resizable";
 import { TooltipProvider } from "./ui/tooltip";
@@ -25,7 +26,7 @@ interface NavProps {
 export const NavPanel = ({
   children,
   defaultLayout = [17, 80],
-  defaultCollapsed,
+  defaultCollapsed = true,
   navCollapsedSize,
 }: NavProps) => {
   const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed);
@@ -62,31 +63,51 @@ export const NavPanel = ({
                 title: "Dashboard",
                 icon: LayoutDashboard,
                 variant: "ghost",
+                route: "/",
               },
               {
                 title: "Weekly Plan",
                 icon: CalendarDays,
                 variant: "ghost",
+                route: "/weekly-plan",
               },
               {
                 title: "Annual Budget",
                 icon: CalendarClock,
                 variant: "ghost",
+                route: "/annual-budget",
               },
               {
                 title: "Budgeted Savings",
                 icon: PiggyBank,
                 variant: "ghost",
+                route: "/budgeted-savings",
               },
               {
                 title: "Transactions",
                 icon: DollarSign,
                 variant: "ghost",
+                route: "/transactions",
               },
               {
-                title: "Message",
+                title: "Conversations",
                 icon: MessageSquare,
                 variant: "ghost",
+                route: "/conversations",
+              },
+            ]}
+            supportLinks={[
+              {
+                title: "Support",
+                icon: LifeBuoy,
+                variant: "ghost",
+                route: "/help",
+              },
+              {
+                title: "Settings",
+                icon: Settings,
+                variant: "ghost",
+                route: "/settings",
               },
             ]}
           />
