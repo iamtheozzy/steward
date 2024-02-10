@@ -33,6 +33,7 @@ export const NavPanel = ({
 
   return (
     <TooltipProvider delayDuration={0}>
+      {/* Panel Group Left/Right */}
       <ResizablePanelGroup
         direction="horizontal"
         onLayout={(sizes: number[]) => {
@@ -40,11 +41,12 @@ export const NavPanel = ({
         }}
         className="h-full items-stretch"
       >
+        {/* Left Panel  */}
         <ResizablePanel
           defaultSize={defaultLayout[0]}
           collapsible={true}
           minSize={10}
-          maxSize={20}
+          maxSize={17}
           collapsedSize={navCollapsedSize}
           onCollapse={() => {
             setIsCollapsed(true);
@@ -113,6 +115,7 @@ export const NavPanel = ({
           />
         </ResizablePanel>
         <ResizableHandle withHandle />
+        {/* Right Panel aka Main Content */}
         <ResizablePanel defaultSize={defaultLayout[1]}>{children}</ResizablePanel>
       </ResizablePanelGroup>
     </TooltipProvider>

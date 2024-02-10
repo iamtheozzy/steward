@@ -42,10 +42,10 @@ export function Nav({ isCollapsed, links, supportLinks }: NavProps) {
           {isCollapsed ? (
             <Tooltip delayDuration={0}>
               <TooltipTrigger asChild>
-                <h1 className="px-3 text-3xl font-bold hover:cursor-pointer">s.</h1>
+                <h1 className="ml-[3px] px-3 text-3xl font-bold hover:cursor-pointer">s.</h1>
               </TooltipTrigger>
               <TooltipContent side="right" className="flex items-center gap-1">
-                <h1 className="px-3 text-sm font-bold hover:cursor-pointer">stewie.</h1>
+                <h1 className="ml-[3px] px-3 text-sm font-bold hover:cursor-pointer">stewie.</h1>
               </TooltipContent>
             </Tooltip>
           ) : (
@@ -60,7 +60,7 @@ export function Nav({ isCollapsed, links, supportLinks }: NavProps) {
                     href={link.route}
                     className={cn(
                       buttonVariants({ variant: link.variant, size: "icon" }),
-                      "h-9 w-9",
+                      "h-9 w-9 ml-[6px]",
                       link.variant === "default" &&
                         "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white",
                     )}
@@ -89,8 +89,7 @@ export function Nav({ isCollapsed, links, supportLinks }: NavProps) {
               </Link>
             ),
           )}
-
-          <div className="flex flex-col">
+          <div className="flex flex-col absolute bottom-4">
             {supportLinks.map((link, index) =>
               isCollapsed ? (
                 <Tooltip key={index} delayDuration={0}>
@@ -99,7 +98,7 @@ export function Nav({ isCollapsed, links, supportLinks }: NavProps) {
                       href={link.route}
                       className={cn(
                         buttonVariants({ variant: link.variant, size: "icon" }),
-                        "h-9 w-9",
+                        "h-9 w-9 ml-[6px]",
                         link.variant === "default" &&
                           "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white",
                       )}
@@ -119,7 +118,7 @@ export function Nav({ isCollapsed, links, supportLinks }: NavProps) {
                   className={cn(
                     buttonVariants({ variant: link.variant, size: "sm" }),
                     link.variant === "default" &&
-                      "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white",
+                      "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white ml-1",
                     "justify-start",
                   )}
                 >
@@ -128,7 +127,8 @@ export function Nav({ isCollapsed, links, supportLinks }: NavProps) {
                 </Link>
               ),
             )}
-            <div className="flex items-center gap-2">
+            {!isCollapsed && (
+            <div className="flex items-center gap-2 ml-[1.5px]">
               <Avatar>
                 <AvatarImage src={user.imageUrl} alt={user.fullName ?? undefined} />
                 <AvatarFallback>{user.fullName}</AvatarFallback>
@@ -138,6 +138,15 @@ export function Nav({ isCollapsed, links, supportLinks }: NavProps) {
                 <p className="text-xs">{user.primaryEmailAddress?.emailAddress}</p>
               </div>
             </div>
+            )}
+            {isCollapsed && (
+            <div className="flex items-center gap-2 ml-[3.5px]">
+              <Avatar>
+                <AvatarImage src={user.imageUrl} alt={user.fullName ?? undefined} />
+                <AvatarFallback>{user.fullName}</AvatarFallback>
+              </Avatar>
+            </div>
+            )}
           </div>
         </nav>
       </div>
