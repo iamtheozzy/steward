@@ -15,7 +15,7 @@ export default async function HomePage() {
         {isLoggedInn && (
           <>
             <p className="text-sm">Welcome {user.firstName}</p>
-            <Link href="/dashboard">
+            <Link href="/new-user">
               <Button>Go to Dashboard</Button>
             </Link>
             <SignOutButton />

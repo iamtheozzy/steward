@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "~/components/ui/resizable";
 import { TooltipProvider } from "./ui/tooltip";
-import { cn } from "~/lib/utils";
+import { cn } from '~/utils/cn';
 import { Nav } from "./nav";
 
 interface NavProps {
