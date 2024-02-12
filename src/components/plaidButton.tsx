@@ -12,7 +12,7 @@ export const PlaidButton = ({linkToken}: PlaidButtonProps) => {
   const { ready, open } = usePlaidLink({
     token: linkToken,
     onSuccess: (publicToken) => {
-      
+      console.log('things')
     }
   });
 

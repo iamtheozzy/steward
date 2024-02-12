@@ -26,7 +26,8 @@ import { getUserByClerkID } from "~/utils/auth";
  *
  * @see https://trpc.io/docs/server/context
  */
-export const createTRPCContext = async (opts: CreateNextContextOptions) => {
+
+export const createTRPCContext = async (opts: { headers: Headers }) => {
   const currentUser = await getUserByClerkID();
 
   return {
@@ -90,12 +91,12 @@ const enforceUserIsAuthed = t.middleware(async ({ ctx, next }) => {
   if (!ctx.currentUser) {
     throw new TRPCError({
       code: "UNAUTHORIZED",
-    })
+    });
   }
   return next({
     ctx: {
       currentUser: ctx.currentUser,
-    }
+    },
   });
 });
 
