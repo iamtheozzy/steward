@@ -1,11 +1,19 @@
 "use client";
 
 import * as React from "react";
-import { UserButton } from "@clerk/nextjs";
-import { LayoutDashboard } from "lucide-react";
+import {
+  LayoutDashboard,
+  CalendarDays,
+  CalendarClock,
+  PiggyBank,
+  DollarSign,
+  MessageSquare,
+  LifeBuoy,
+  Settings,
+} from "lucide-react";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "~/components/ui/resizable";
 import { TooltipProvider } from "./ui/tooltip";
-import { cn } from "~/lib/utils";
+import { cn } from '~/utils/cn';
 import { Nav } from "./nav";
 
 interface NavProps {
@@ -15,11 +23,17 @@ interface NavProps {
   children: React.ReactNode;
 }
 
-export const NavPanel = ({ children, defaultLayout = [17, 80], defaultCollapsed, navCollapsedSize }: NavProps) => {
+export const NavPanel = ({
+  children,
+  defaultLayout = [17, 80],
+  defaultCollapsed = true,
+  navCollapsedSize,
+}: NavProps) => {
   const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed);
 
   return (
     <TooltipProvider delayDuration={0}>
+      {/* Panel Group Left/Right */}
       <ResizablePanelGroup
         direction="horizontal"
         onLayout={(sizes: number[]) => {
@@ -27,11 +41,12 @@ export const NavPanel = ({ children, defaultLayout = [17, 80], defaultCollapsed,
         }}
         className="h-full items-stretch"
       >
+        {/* Left Panel  */}
         <ResizablePanel
           defaultSize={defaultLayout[0]}
           collapsible={true}
-          minSize={5}
-          maxSize={20}
+          minSize={10}
+          maxSize={17}
           collapsedSize={navCollapsedSize}
           onCollapse={() => {
             setIsCollapsed(true);
@@ -50,11 +65,57 @@ export const NavPanel = ({ children, defaultLayout = [17, 80], defaultCollapsed,
                 title: "Dashboard",
                 icon: LayoutDashboard,
                 variant: "ghost",
+                route: "/",
+              },
+              {
+                title: "Weekly Plan",
+                icon: CalendarDays,
+                variant: "ghost",
+                route: "/weekly-plan",
+              },
+              {
+                title: "Annual Budget",
+                icon: CalendarClock,
+                variant: "ghost",
+                route: "/annual-budget",
+              },
+              {
+                title: "Budgeted Savings",
+                icon: PiggyBank,
+                variant: "ghost",
+                route: "/budgeted-savings",
+              },
+              {
+                title: "Transactions",
+                icon: DollarSign,
+                variant: "ghost",
+                route: "/transactions",
+              },
+              {
+                title: "Conversations",
+                icon: MessageSquare,
+                variant: "ghost",
+                route: "/conversations",
+              },
+            ]}
+            supportLinks={[
+              {
+                title: "Support",
+                icon: LifeBuoy,
+                variant: "ghost",
+                route: "/help",
+              },
+              {
+                title: "Settings",
+                icon: Settings,
+                variant: "ghost",
+                route: "/settings",
               },
             ]}
           />
         </ResizablePanel>
         <ResizableHandle withHandle />
+        {/* Right Panel aka Main Content */}
         <ResizablePanel defaultSize={defaultLayout[1]}>{children}</ResizablePanel>
       </ResizablePanelGroup>
     </TooltipProvider>
