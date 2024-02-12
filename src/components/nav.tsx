@@ -140,7 +140,7 @@ export function Nav({ isCollapsed, links, supportLinks }: NavProps) {
             </div>
             )}
             {isCollapsed && (
-            <div className="flex items-center gap-2 ml-[3.5px]">
+            <div className="flex items-center gap-2">
               <Avatar>
                 <AvatarImage src={user.imageUrl} alt={user.fullName ?? undefined} />
                 <AvatarFallback>{user.fullName}</AvatarFallback>
