@@ -1,26 +1,87 @@
-import { SignInButton, SignOutButton, currentUser} from '@clerk/nextjs'
+import { SignInButton, SignOutButton, currentUser } from '@clerk/nextjs';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
+import { ModeToggle } from '~/components/mode-toggle';
 import { Button } from '~/components/ui/button';
+import { buttonVariants } from "../components/ui/button";
+import dynamic from 'next/dynamic'; // Import dynamic from next/dynamic
+import { Hero } from '~/components/Hero';
+
+// Import MobileMenu dynamically to ensure it's rendered on the client-side
+const MobileMenu = dynamic(() => import('~/components/MobileMenu'), { ssr: false });
+
+interface RouteProps {
+  href: string;
+  label: string;
+}
+
+const routeList: RouteProps[] = [
+  {
+    href: "#features",
+    label: "Features",
+  },
+  {
+    href: "#testimonials",
+    label: "Testimonials",
+  },
+  {
+    href: "#pricing",
+    label: "Pricing",
+  },
+  {
+    href: "#faq",
+    label: "FAQ",
+  },
+];
 
 export default async function HomePage() {
   const user = await currentUser();
-  const isLoggedInn = user !== null;
+  const isLoggedIn = user !== null;
+
+  // // Redirect to /dashboard if user is logged in
+  // if (isLoggedIn) {
+  //   redirect('/dashboard');
+  //   return null; // Return null to prevent rendering of the rest of the component
+  // }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center rounded-l-2xl bg-slate-100">
-      <h1 className="upppercase text-5xl font-bold">HOME PAGE</h1>
-      <p className="text-sm">We have to make some sort of design to make this pretty</p>
-      <div className="mt-8 flex flex-col items-center justify-center">        
-        {isLoggedInn ? <SignOutButton /> : <SignInButton />}
-        {isLoggedInn && (
-          <>
-            <p className="text-sm">Welcome {user.firstName}</p>
-            <Link href="/new-user">
-              <Button>Go to Dashboard</Button>
-            </Link>
-            <SignOutButton />
-          </>
-        )}
+    <main>
+      <nav className='items-center px-10 py-2 sticky border-b-[1px] top-0 z-40 w-full bg-white dark:border-b-slate-700 dark:bg-background flex justify-between'>
+        <h1 className='text-xl lg:text-2xl font-extrabold'><a href="/">Steward.</a></h1>
+        <ul className='hidden lg:flex justify-center items-center lg:gap-8'>
+        {routeList.map(({ href, label }: RouteProps) => (
+          <a
+            key={label}
+            href={href}
+            className={buttonVariants({ variant: "ghost" })}
+            >
+            {label}
+          </a>
+        ))}
+        </ul>
+        <div className='flex lg:gap-x-2'>
+          {isLoggedIn && (
+            <div className='hidden lg:flex mt-[5px]'>
+              <Button>
+                <SignOutButton></SignOutButton>
+              </Button>
+            </div>
+          )}
+          {!isLoggedIn && (
+            <div className='hidden lg:flex mt-[5px]'>
+              <Button>
+                <SignInButton afterSignInUrl='/dashboard'></SignInButton>
+              </Button>
+            </div>
+          )}
+          <ModeToggle />
+          <MobileMenu />
+        </div>
+      </nav>
+      <div className='mx-auto px-10'>
+        <div>
+          <Hero></Hero>
+        </div>
       </div>
     </main>
   );

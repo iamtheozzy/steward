@@ -42,14 +42,14 @@ export function Nav({ isCollapsed, links, supportLinks }: NavProps) {
           {isCollapsed ? (
             <Tooltip delayDuration={0}>
               <TooltipTrigger asChild>
-                <h1 className="ml-[3px] px-3 text-3xl font-bold hover:cursor-pointer">s.</h1>
+                <h1 className="ml-[3px] px-3 text-3xl font-bold hover:cursor-pointer"><a href="/">s.</a></h1>
               </TooltipTrigger>
               <TooltipContent side="right" className="flex items-center gap-1">
                 <h1 className="ml-[3px] px-3 text-sm font-bold hover:cursor-pointer">stewie.</h1>
               </TooltipContent>
             </Tooltip>
           ) : (
-            <h1 className="px-3 text-2xl font-bold">steward.</h1>
+            <h1 className="px-3 text-2xl font-bold"><a href="/">steward.</a></h1>
           )}
 
           {links.map((link, index) =>
