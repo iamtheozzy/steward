@@ -1,6 +1,4 @@
 import { SignInButton, SignOutButton, currentUser } from '@clerk/nextjs';
-import Link from 'next/link';
-import { redirect } from 'next/navigation';
 import { ModeToggle } from '~/components/mode-toggle';
 import { Button } from '~/components/ui/button';
 import { buttonVariants } from "../components/ui/button";
@@ -37,12 +35,6 @@ const routeList: RouteProps[] = [
 export default async function HomePage() {
   const user = await currentUser();
   const isLoggedIn = user !== null;
-
-  // // Redirect to /dashboard if user is logged in
-  // if (isLoggedIn) {
-  //   redirect('/dashboard');
-  //   return null; // Return null to prevent rendering of the rest of the component
-  // }
 
   return (
     <main>
