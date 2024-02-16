@@ -80,7 +80,7 @@ export default async function HomePage() {
       </nav>
       <div className='mx-auto px-10'>
         <div>
-          <Hero></Hero>
+          <Hero />
         </div>
       </div>
     </main>
