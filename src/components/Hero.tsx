@@ -1,7 +1,7 @@
 import { Button } from "./ui/button";
 import { HeroCards } from "./HeroCards";
 import Link from 'next/link';
-import { SignUpButton, currentUser } from "@clerk/nextjs";
+import { SignInButton, SignOutButton, SignUpButton, currentUser } from "@clerk/nextjs";
 
 export const Hero = async () => {
   const user = await currentUser();
@@ -32,11 +32,23 @@ export const Hero = async () => {
         {/* Render the appropriate button based on the user's login status */}
         <div className="justify-center">
           {isLoggedIn ? (
-            <Link href="/dashboard" passHref>
-              <Button className="w-full md:w-1/3">Go to Dashboard</Button>
-            </Link>
+
+            <div className="space-x-4 flex">
+              <Link href="/dashboard" passHref className="w-full">
+                <Button className="w-full md:w-1/3">Go to Dashboard</Button>
+              </Link>
+              <Button className="w-full md:w-1/3 lg:hidden" variant={"secondary"}>
+                <SignOutButton>Log Out</SignOutButton>
+              </Button>
+            </div>
+
           ) : (
-            <Button className="w-full md:w-1/3"><SignUpButton afterSignUpUrl="/dashboard">Get Started</SignUpButton></Button>
+            <div className="space-x-4 flex">
+              <Button className="w-full md:w-1/3"><SignUpButton afterSignUpUrl="/dashboard" afterSignInUrl="/dashboard">Get Started</SignUpButton></Button>
+              <Button className="w-full md:w-1/3 lg:hidden" variant="secondary">
+                <SignInButton afterSignInUrl="/dashboard">Sign In</SignInButton>
+              </Button>            
+            </div>
           )}
         </div>
       </div>
