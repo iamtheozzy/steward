@@ -65,7 +65,8 @@ export const NavPanel = ({
                 title: "Dashboard",
                 icon: LayoutDashboard,
                 variant: "ghost",
-                route: "/",
+                // This used to be / but adjusted to /dashboard not sure if users would want to go back to the marketing page?
+                route: "/dashboard",
               },
               {
                 title: "Weekly Plan",
