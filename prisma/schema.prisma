@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -12,12 +12,74 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String        @id @default(uuid())
+  email         String        @unique
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  clerkId       String        @unique
+  financeTeams  FinanceTeam[] @relation("UserFinanceTeams")
+  items         Item[]
+  roles         UserRole[]
+}
 
-  clerkId String         @unique
-  email   String         @unique
+model FinanceTeam {
+  id            String      @id @default(uuid())
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  users         User[]      @relation("UserFinanceTeams")
+  userRoles     UserRole[]
+  // Additional fields for team specifics
+}
 
-  plaidAccessToken String? @default("")
+model Role {
+  id        String     @id @default(uuid())
+  name      String     @unique
+  userRoles UserRole[]
+}
+
+model UserRole {
+  id           String      @id @default(uuid())
+  userId       String
+  financeTeamId String
+  roleId       String
+  user         User        @relation(fields: [userId], references: [id])
+  financeTeam  FinanceTeam @relation(fields: [financeTeamId], references: [id])
+  role         Role        @relation(fields: [roleId], references: [id])
+  
+  @@unique([userId, financeTeamId, roleId])
+  @@index([financeTeamId])
+  @@index([roleId])
+}
+
+model Item {
+  id              String    @id @default(uuid())
+  userId          String
+  user            User      @relation(fields: [userId], references: [id])
+  plaidAccessToken String
+  plaidItemId      String   @unique
+  institutionId    String
+  institutionName  String
+  accounts         Account[]
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model Account {
+  id                String    @id @default(uuid())
+  itemId             String
+  item               Item      @relation(fields: [itemId], references: [id])
+  accountId          String    @unique
+  name               String
+  type               String
+  subtype            String?
+  mask               String?
+  availableBalance   Float?    @default(0)
+  currentBalance     Float?    @default(0)
+  limit              Float?    @default(0)
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  @@index([itemId])
 }

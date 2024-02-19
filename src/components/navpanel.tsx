@@ -10,6 +10,7 @@ import {
   MessageSquare,
   LifeBuoy,
   Settings,
+  WalletCards
 } from "lucide-react";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "~/components/ui/resizable";
 import { TooltipProvider } from "./ui/tooltip";
@@ -85,6 +86,12 @@ export const NavPanel = ({
                 icon: PiggyBank,
                 variant: "ghost",
                 route: "/budgeted-savings",
+              },
+              {
+                title: "Accounts",
+                icon: WalletCards,
+                variant: "ghost",
+                route: "/accounts",
               },
               {
                 title: "Transactions",

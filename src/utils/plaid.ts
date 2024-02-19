@@ -1,4 +1,5 @@
 import { Configuration, PlaidApi, PlaidEnvironments, Products, CountryCode } from "plaid";
+import {TRPCError} from "@trpc/server";
 
 const plaidConfig = new Configuration({
   basePath: PlaidEnvironments.sandbox,
@@ -23,14 +24,21 @@ export async function generateLinkToken(userId: string) {
     language: "en",
   });
 
-  return response.data.link_token;
+  return response.data;
 }
 
-export const exchangePublicToken = async (userId: string, publicToken: string) => {
+export const publicTokenExchange = async (publicToken: string) => {
+  console.log("publicToken", publicToken)
   const response = await plaidClient.itemPublicTokenExchange({
     public_token: publicToken,
   });
 
-  return response.data.access_token;
+  if (!response.data?.access_token) {
+    throw new TRPCError({
+      code: "BAD_REQUEST"
+    });
+  }
+
+  return response.data;
 }
 
