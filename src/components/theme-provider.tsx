@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect } from "react";
-import { useLocalStorage } from "src/hooks/useLocalStorage";
+import { useLocalStorage } from "~/hooks/useLocalStorage";
 
 type Theme = "dark" | "light" | "system";
 
