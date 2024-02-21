@@ -72,12 +72,14 @@ model Account {
   item               Item      @relation(fields: [itemId], references: [id])
   accountId          String    @unique
   name               String
+  officialName       String?
   type               String
   subtype            String?
   mask               String?
   availableBalance   Float?    @default(0)
   currentBalance     Float?    @default(0)
   limit              Float?    @default(0)
+  isoCurrencyCode    String?
   createdAt          DateTime  @default(now())
   updatedAt          DateTime  @updatedAt
 

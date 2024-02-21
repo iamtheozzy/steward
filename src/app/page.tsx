@@ -4,6 +4,7 @@ import { Button } from '~/components/ui/button';
 import { buttonVariants } from "../components/ui/button";
 import dynamic from 'next/dynamic'; // Import dynamic from next/dynamic
 import { Hero } from '~/components/Hero';
+import Link from 'next/link';
 
 // Import MobileMenu dynamically to ensure it's rendered on the client-side
 const MobileMenu = dynamic(() => import('~/components/MobileMenu'), { ssr: false });
@@ -55,14 +56,14 @@ export default async function HomePage() {
           {isLoggedIn && (
             <div className='hidden lg:flex mt-[5px]'>
               <Button>
-                <SignOutButton></SignOutButton>
+                <Link href='/dashboard'>Dashboard</Link>
               </Button>
             </div>
           )}
           {!isLoggedIn && (
             <div className='hidden lg:flex mt-[5px]'>
               <Button>
-                <SignInButton afterSignInUrl='/dashboard'></SignInButton>
+                <SignInButton afterSignInUrl='/new-user'></SignInButton>
               </Button>
             </div>
           )}

@@ -28,7 +28,6 @@ export async function generateLinkToken(userId: string) {
 }
 
 export const publicTokenExchange = async (publicToken: string) => {
-  console.log("publicToken", publicToken)
   const response = await plaidClient.itemPublicTokenExchange({
     public_token: publicToken,
   });
@@ -42,3 +41,17 @@ export const publicTokenExchange = async (publicToken: string) => {
   return response.data;
 }
 
+export const getAccounts = async (accessToken: string) => {
+  try {
+    const response = await plaidClient.accountsGet({
+      access_token: accessToken,
+    });
+    return response.data
+  } catch (error) {
+    console.error('failed to retrieve accounts from Plaid', error);
+    throw new TRPCError({
+      code: "INTERNAL_SERVER_ERROR",
+      message: "Failed to retrieve accounts from Plaid",
+    });
+  }
+};

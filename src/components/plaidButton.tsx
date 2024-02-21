@@ -28,6 +28,5 @@ export const PlaidButton = ({link_token}: {link_token: string}) => {
     <Button onClick={handleOpen} disabled={!ready}>
       Add Account
     </Button>
-    
   );
 };
