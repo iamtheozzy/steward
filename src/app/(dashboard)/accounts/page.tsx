@@ -1,8 +1,6 @@
 import AccountsList from "./AccountsList";
 
 export default async function AccountsPage() {
-  
-
   return (
     <main className="min-h-screen rounded-l-2xl bg-slate-100">
       <div className="px-4 py-10">
