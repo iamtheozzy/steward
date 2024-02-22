@@ -63,7 +63,7 @@ export const POST = async (request: Request, _response: Response) => {
         ...newItem,
         plaidAccessToken: undefined, // Removing the access token from the response so its not sent to the client.
       },
-      accounts: accounts.length,
+      accountsLength: accounts.length,
     };
 
     return Response.json({ data: responseData });
