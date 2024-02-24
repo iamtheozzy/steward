@@ -56,7 +56,7 @@ export default async function HomePage() {
           {isLoggedIn && (
             <div className='hidden lg:flex mt-[5px]'>
               <Button>
-                <Link href='/dashboard'>Dashboard</Link>
+                <Link href='/new-user'>Dashboard</Link>
               </Button>
             </div>
           )}
