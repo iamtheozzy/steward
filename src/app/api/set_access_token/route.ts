@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import type { PlaidLinkOnSuccessMetadata } from "react-plaid-link";
 import { db } from "~/server/db";
 import { getUserByClerkID } from "~/utils/auth";
@@ -65,6 +66,9 @@ export const POST = async (request: Request, _response: Response) => {
       },
       accountsLength: accounts.length,
     };
+
+    // Revalidate the /accounts page to update the list of accounts
+    revalidatePath('/accounts')
 
     return Response.json({ data: responseData });
   } catch (error) {
