@@ -1,5 +1,6 @@
 import { Configuration, PlaidApi, PlaidEnvironments, Products, CountryCode } from "plaid";
-import {TRPCError} from "@trpc/server";
+import { TRPCError } from "@trpc/server";
+import { PrismaClient } from "@prisma/client";
 
 const plaidConfig = new Configuration({
   basePath: PlaidEnvironments.sandbox,
@@ -34,21 +35,21 @@ export const publicTokenExchange = async (publicToken: string) => {
 
   if (!response.data?.access_token) {
     throw new TRPCError({
-      code: "BAD_REQUEST"
+      code: "BAD_REQUEST",
     });
   }
 
   return response.data;
-}
+};
 
 export const getAccounts = async (accessToken: string) => {
   try {
     const response = await plaidClient.accountsGet({
       access_token: accessToken,
     });
-    return response.data
+    return response.data;
   } catch (error) {
-    console.error('failed to retrieve accounts from Plaid', error);
+    console.error("failed to retrieve accounts from Plaid", error);
     throw new TRPCError({
       code: "INTERNAL_SERVER_ERROR",
       message: "Failed to retrieve accounts from Plaid",

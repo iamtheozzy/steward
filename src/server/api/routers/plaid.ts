@@ -7,26 +7,30 @@ export const plaidRouter = createTRPCRouter({
     const data = await generateLinkToken(userId);
     return data;
   }),
-  getAccounts: protectedProcedure.query(async ({ctx}) => {
+  getAccounts: protectedProcedure.query(async ({ ctx }) => {
     const userId = ctx.currentUser.id;
+    const user = ctx.currentUser;
     const items = await ctx.db.item.findMany({
       where: {
         userId,
       },
       include: {
         accounts: true,
-      }
-    })
-  
+      },
+    });
+
     const accountsWithInstitution = items.flatMap((item) => {
       return item.accounts.map((account) => {
         return {
           ...account,
+          user: {
+            ...user,
+          },
           institutionName: item.institutionName,
-        }
-      })
+        };
+      });
     });
 
     return accountsWithInstitution;
-  })
+  }),
 });
