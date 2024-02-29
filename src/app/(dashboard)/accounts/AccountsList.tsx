@@ -18,7 +18,7 @@ export default function AccountsList() {
   const [oauthLinkToken, setOathLinkToken] = useState<string>("");
   const [isOauth, setIsOath] = useState(false);
 
-  const { data, isLoading } = api.plaid.getAccounts.useQuery();
+  const { data } = api.plaid.getAccounts.useQuery();
 
   const generateToken = async () => {
     const data = await fetchCreateLinkToken();
