@@ -141,10 +141,6 @@ export function Nav({ isCollapsed, links, supportLinks }: NavProps) {
                     },
                   }}
                 />
-                {/* <Avatar>
-                <AvatarImage src={user.imageUrl} alt={user.fullName ?? undefined} />
-                <AvatarFallback>{user.fullName}</AvatarFallback>
-              </Avatar> */}
                 {!isCollapsed ? (
                   <div>
                     <p className="text-xs">{user.fullName}</p>
