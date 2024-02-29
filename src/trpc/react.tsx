@@ -4,7 +4,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { loggerLink, unstable_httpBatchStreamLink } from "@trpc/client";
 import { createTRPCReact, type inferReactQueryProcedureOptions } from "@trpc/react-query";
 import { useState } from "react";
-import { devtoolsLink } from "trpc-client-devtools-link";
 import type { inferRouterOutputs, inferRouterInputs } from "@trpc/server";
 
 import { type AppRouter } from "~/server/api/root";
@@ -38,11 +37,6 @@ export function TRPCReactProvider(props: { children: React.ReactNode; cookies: s
               "x-trpc-source": "react",
             };
           },
-        }),
-        devtoolsLink({
-          // `enabled` is true by default
-          // If you want to use the devtools extension just for development, do the following
-          enabled: process.env.NODE_ENV === "development",
         }),
       ],
     }),
