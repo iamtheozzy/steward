@@ -13,8 +13,6 @@
     "start": "next start"
   },
   "dependencies": {
-    "-": "^0.0.1",
-    "0g": "^0.0.9",
     "@clerk/nextjs": "^4.29.3",
     "@prisma/client": "^5.10.2",
     "@radix-ui/react-avatar": "^1.0.4",
@@ -38,7 +36,6 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "dayjs": "^1.11.10",
-    "g": "^2.0.1",
     "lucide-react": "^0.304.0",
     "next": "^14.0.4",
     "plaid": "^20.0.0",
@@ -51,7 +48,6 @@
     "superjson": "^2.2.1",
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7",
-    "trpc-client-devtools-link": "0.2.1-next",
     "zod": "^3.22.4"
   },
   "devDependencies": {
