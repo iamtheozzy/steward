@@ -85,19 +85,6 @@ model Account {
   isoCurrencyCode    String?
   createdAt          DateTime  @default(now())
   updatedAt          DateTime  @updatedAt
-  balanceHistory    AccountBalanceHistory[]
 
   @@index([itemId])
-}
-
-model AccountBalanceHistory {
-  id             String   @id @default(uuid())
-  accountId      String
-  balance        Float // Represents the current balance
-  availableBalance Float? // Represents funds available for immediate use
-  date           DateTime  @default(now())// The date of this balance snapshot
-  updatedAt      DateTime  @updatedAt
-  account        Account @relation(fields: [accountId], references: [id])
-
-  @@index([accountId, date])
 }
