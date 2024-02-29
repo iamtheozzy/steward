@@ -1,6 +1,5 @@
 import { Configuration, PlaidApi, PlaidEnvironments, Products, CountryCode } from "plaid";
 import { TRPCError } from "@trpc/server";
-import { PrismaClient } from "@prisma/client";
 
 const plaidConfig = new Configuration({
   basePath: PlaidEnvironments.sandbox,
