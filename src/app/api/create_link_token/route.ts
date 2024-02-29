@@ -1,6 +1,5 @@
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import { NextResponse } from "next/server";
 import { generateLinkToken } from "~/utils/plaid";
 
 export const GET = async () => {
@@ -10,5 +9,5 @@ export const GET = async () => {
   }
 
   const linkTokenData = await generateLinkToken(userId);
-  return NextResponse.json({ data: linkTokenData });
+  return Response.json({ data: linkTokenData });
 };
