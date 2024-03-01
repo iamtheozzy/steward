@@ -35,9 +35,16 @@ model FinanceTeam {
   userRoles     UserRole[]
 }
 
+enum RoleName {
+  ADMIN
+  ADVISOR
+  VIEWER
+  EDITOR
+}
+
 model Role {
   id        String     @id @default(uuid())
-  name      String     @unique
+  name      RoleName   
   userRoles UserRole[]
 }
 
