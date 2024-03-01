@@ -5,18 +5,16 @@ async function main() {
   const roles = Object.values(userRoles);
 
   for (const roleName of roles) {
-    await db.role.upsert({
-      where: {
-        name: roleName,
-      },
-      update: {},
-      create: {
-        name: roleName,
-      },
-    });
+    await db.role
+      .create({
+        data: {
+          name: roleName,
+        },
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   }
-
-  console.log("User Roles have been seeded successfully");
 }
 
 main()
