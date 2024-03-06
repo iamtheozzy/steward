@@ -1,7 +1,34 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import { TRPCError } from "@trpc/server";
 
 export const userRouter = createTRPCRouter({
+  getUserByClerkId: protectedProcedure
+    .input(
+      z.object({
+        clerkUserid: z.string(),
+      }),
+    )
+    .query(async ({ input, ctx }) => {
+      const { clerkUserid } = input;
+      const user = await ctx.db.user.findUniqueOrThrow({
+        where: {
+          clerkId: clerkUserid,
+        },
+        include: {
+          financeTeams: true,
+        },
+      });
+
+      if (!user) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "User not found",
+        });
+      }
+
+      return user;
+    }),
   createUser: protectedProcedure
     .input(
       z.object({

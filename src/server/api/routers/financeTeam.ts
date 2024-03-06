@@ -24,6 +24,44 @@ export const financeTeamRouter = createTRPCRouter({
         },
       });
 
+      const collaboratorRole = await ctx.db.role.findUnique({
+        where: {
+          name: "COLLABORATOR",
+        },
+      });
+
+      if (!collaboratorRole) {
+        throw new Error("Default role not found");
+      }
+
+      await ctx.db.userRole.create({
+        data: {
+          userId,
+          financeTeamId: financeTeam.id,
+          roleId: collaboratorRole.id,
+        },
+      });
+
+      return financeTeam;
+    }),
+  getFinanceTeamByUserId: protectedProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+      }),
+    )
+    .query(async ({ input, ctx }) => {
+      const { userId } = input;
+      const financeTeam = await ctx.db.financeTeam.findFirst({
+        where: {
+          users: {
+            some: {
+              id: userId,
+            },
+          },
+        },
+      });
+
       return financeTeam;
     }),
 });
