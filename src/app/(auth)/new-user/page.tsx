@@ -16,7 +16,11 @@ const createnewUser = async () => {
       await db.user.create({
         data: {
           clerkId: user.id,
-          email: user.emailAddresses[0]?.emailAddress ?? "", // Provide a default value for email
+          email: user.emailAddresses[0]?.emailAddress ?? "", //
+          firstName: user.firstName,
+          lastName: user.lastName,
+          birthday: user.birthday,
+          imageUrl: user.imageUrl,
         },
       });
     }
@@ -28,6 +32,6 @@ const createnewUser = async () => {
 const NewUser = async () => {
   await createnewUser();
   return <div>Creating new user...</div>;
-}
+};
 
 export default NewUser;

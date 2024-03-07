@@ -12,7 +12,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const defaultCollapsed: boolean = collapsed ? (JSON.parse(collapsed.value) as boolean) : false;
 
   return (
-    <div className="flex h-screen bg-gray-800">
+    <div className="h-screen bg-gray-800">
       <NavPanel
         defaultLayout={defaultLayout}
         defaultCollapsed={defaultCollapsed}

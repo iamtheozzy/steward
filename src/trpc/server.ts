@@ -1,11 +1,7 @@
 import "server-only";
 
-import {
-  createTRPCProxyClient,
-  loggerLink,
-  TRPCClientError,
-} from "@trpc/client";
-import { callProcedure } from "@trpc/server";
+import { createTRPCProxyClient, loggerLink, TRPCClientError } from "@trpc/client";
+import { callProcedure, type inferRouterInputs, type inferRouterOutputs } from "@trpc/server";
 import { observable } from "@trpc/server/observable";
 import { type TRPCErrorResponse } from "@trpc/server/rpc";
 import { cookies } from "next/headers";
@@ -14,6 +10,10 @@ import { cache } from "react";
 import { appRouter, type AppRouter } from "~/server/api/root";
 import { createTRPCContext } from "~/server/api/trpc";
 import { transformer } from "./shared";
+
+export type RouterInputs = inferRouterInputs<AppRouter>;
+
+export type RouterOutputs = inferRouterOutputs<AppRouter>;
 
 /**
  * This wraps the `createTRPCContext` helper and provides the required context for the tRPC API when

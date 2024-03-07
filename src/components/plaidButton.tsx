@@ -1,31 +1,32 @@
-'use client'
+"use client";
 
-import { usePlaidLink } from "react-plaid-link";
+import { useCallback } from "react";
+import { type PlaidLinkOnSuccess, usePlaidLink } from "react-plaid-link";
+import { fetchExchangePublicToken } from "~/utils/api";
 import { Button } from "./ui/button";
 
-type PlaidButtonProps = {
-  linkToken: string
-}
+export const PlaidButton = ({link_token}: {link_token: string}) => {
 
-export const PlaidButton = ({linkToken}: PlaidButtonProps) => {
+  const onSuccess = useCallback<PlaidLinkOnSuccess>(async (public_token:string, metadata) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const data = await fetchExchangePublicToken(public_token, metadata);
+    return Response.json(data);
+  }, []);
 
   const { ready, open } = usePlaidLink({
-    token: linkToken,
-    onSuccess: (publicToken) => {
-      console.log('things')
-    }
+    token: link_token,
+    onSuccess,
   });
 
   const handleOpen = () => {
-    console.log('Clicked!')
     if (ready) {
       open();
     }
-  }
+  };
 
   return (
     <Button onClick={handleOpen} disabled={!ready}>
-      Connect your bank
+      Add Account
     </Button>
   );
-}
+};

@@ -1,6 +1,5 @@
 import { plaidRouter } from '~/server/api/routers/plaid'
 import { createTRPCRouter } from "~/server/api/trpc";
-
 /**
  * This is the primary router for your server.
  *

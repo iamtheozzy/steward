@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import { ThemeProvider } from "~/components/theme-provider";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -24,6 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`font-sans ${inter.variable}`}>
         <ClerkProvider>
             <TRPCReactProvider cookies={cookies().toString()}>
+              <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
               <ThemeProvider>
                 {children}
               </ThemeProvider>
