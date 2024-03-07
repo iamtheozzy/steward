@@ -27,12 +27,10 @@ const createnewUser = async () => {
 
     // if the user has a finance team redirect to the dashboard
     if (financeTeams.length > 0) {
-      console.log("User has a finance team", financeTeams[0]);
-      // redirect("/dashboard");
+      redirect("/dashboard");
     } else {
       // if the user doesn't have a finance team redirect to the new finance team page
-      console.log("User doesn't have a finance team");
-      // redirect("/new-user/finance-team");
+      redirect("/new-user/finance-team");
     }
   }
 };
