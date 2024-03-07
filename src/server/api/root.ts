@@ -3,6 +3,7 @@ import { plaidRouter } from "~/server/api/routers/plaidRouter";
 import { userRouter } from "~/server/api/routers/userRouter";
 import { financeTeamRouter } from "~/server/api/routers/financeTeamRouter";
 import { invitationRouter } from "~/server/api/routers/invitationRouter";
+import { RoleRouter } from "~/server/api/routers/roleRouter";
 
 /**
  * This is the primary router for your server.
@@ -14,6 +15,7 @@ export const appRouter = createTRPCRouter({
   user: userRouter,
   financeTeam: financeTeamRouter,
   invitation: invitationRouter,
+  role: RoleRouter,
 });
 
 // export type definition of API

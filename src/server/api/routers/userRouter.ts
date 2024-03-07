@@ -29,6 +29,34 @@ export const userRouter = createTRPCRouter({
 
       return user;
     }),
+  getCurrentUser: protectedProcedure
+    .input(
+      z.optional(
+        z.object({
+          includeFinanceTeams: z.boolean().optional(),
+        }),
+      ),
+    )
+    .query(async ({ ctx, input }) => {
+      const { includeFinanceTeams } = input ?? {};
+      const user = await ctx.db.user.findFirst({
+        where: {
+          id: ctx.currentUser.id,
+        },
+        include: {
+          financeTeams: !!includeFinanceTeams,
+        },
+      });
+
+      if (!user) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "User not found",
+        });
+      }
+
+      return user;
+    }),
   createUser: protectedProcedure
     .input(
       z.object({

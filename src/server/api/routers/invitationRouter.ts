@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
@@ -14,6 +15,20 @@ export const invitationRouter = createTRPCRouter({
     .mutation(async ({ input, ctx }) => {
       const { email, financeTeamId, senderId, roleId } = input;
 
+      const existingInvitation = await ctx.db.invitation.findFirst({
+        where: {
+          financeTeamId,
+          email,
+        },
+      });
+
+      if (existingInvitation) {
+        throw new TRPCError({
+          code: "CONFLICT",
+          message: "An invitation has already been sent to this email",
+        });
+      }
+
       const invitation = await ctx.db.invitation.create({
         data: {
           email,
@@ -26,23 +41,21 @@ export const invitationRouter = createTRPCRouter({
 
       return invitation;
     }),
-  listPendingInvitations: protectedProcedure
-    .input(z.object({ financeTeamId: z.string().min(1, "must be a valid finance team id") }))
-    .query(async ({ input, ctx }) => {
-      const { financeTeamId } = input;
+  listPendingInvitations: protectedProcedure.query(async ({ ctx }) => {
+    const userId = ctx.currentUser.id;
 
-      const pendingInvitations = await ctx.db.invitation.findMany({
-        where: {
-          financeTeamId,
-          status: "pending",
-        },
-        include: {
-          role: true,
-        },
-      });
+    const pendingInvitations = await ctx.db.invitation.findMany({
+      where: {
+        senderId: userId,
+        status: "pending",
+      },
+      include: {
+        role: true,
+      },
+    });
 
-      return pendingInvitations;
-    }),
+    return pendingInvitations;
+  }),
   updateInvitationStatus: protectedProcedure
     .input(
       z.object({
