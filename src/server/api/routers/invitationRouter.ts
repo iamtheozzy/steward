@@ -52,6 +52,9 @@ export const invitationRouter = createTRPCRouter({
       include: {
         role: true,
       },
+      orderBy: {
+        email: "asc",
+      },
     });
 
     return pendingInvitations;
@@ -72,5 +75,16 @@ export const invitationRouter = createTRPCRouter({
       });
 
       return invitation;
+    }),
+  deleteInvitation: protectedProcedure
+    .input(z.object({ invitationId: z.string() }))
+    .mutation(async ({ input, ctx }) => {
+      const { invitationId } = input;
+
+      await ctx.db.invitation.delete({
+        where: { id: invitationId },
+      });
+
+      return true;
     }),
 });

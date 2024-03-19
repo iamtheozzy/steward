@@ -8,6 +8,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/tooltip
 import { buttonVariants } from "~/components/ui/button";
 import { useUser } from "@clerk/nextjs";
 import { UserButton, SignedIn } from "@clerk/nextjs";
+import { ModeToggle } from "~/components/mode-toggle";
 
 interface NavProps {
   isCollapsed: boolean;
@@ -131,23 +132,26 @@ export function Nav({ isCollapsed, links, supportLinks }: NavProps) {
                 </Link>
               ),
             )}
-            <div className="flex items-center gap-2">
-              <SignedIn>
-                <UserButton
-                  afterSignOutUrl="/"
-                  appearance={{
-                    elements: {
-                      avatarBox: "h-12 w-12",
-                    },
-                  }}
-                />
-                {!isCollapsed ? (
-                  <div>
-                    <p className="text-xs">{user.fullName}</p>
-                    <p className="text-xs">{user.primaryEmailAddress?.emailAddress}</p>
-                  </div>
-                ) : null}
-              </SignedIn>
+            <div className="flex flex-col">
+              <ModeToggle />
+              <div className="flex items-center gap-2">
+                <SignedIn>
+                  <UserButton
+                    afterSignOutUrl="/"
+                    appearance={{
+                      elements: {
+                        avatarBox: "h-12 w-12",
+                      },
+                    }}
+                  />
+                  {!isCollapsed ? (
+                    <div>
+                      <p className="text-xs">{user.fullName}</p>
+                      <p className="text-xs">{user.primaryEmailAddress?.emailAddress}</p>
+                    </div>
+                  ) : null}
+                </SignedIn>
+              </div>
             </div>
           </div>
         </nav>
